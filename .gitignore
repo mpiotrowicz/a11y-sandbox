@@ -1,0 +1,11 @@
+*.DS_Store
+/.sass-cache
+.sass-cache
+.scssc
+source/bower_components
+
+tmp
+
+*.zip
+*.sublime-project
+*.sublime-workspace
