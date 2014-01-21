@@ -60,8 +60,8 @@
 
         // witin the tab, find the details and update the Aria attributes
         $currentPanel.attr({
-          "aria-labelledby": "TabController-" + $tab_panels[i].id,
-          //"aria-labelledby": "TabController-" + $tab_panels[i].id + " TabPanelTitle-" + $tab_panels[i].id,
+          //"aria-labelledby": "TabController-" + $tab_panels[i].id,
+          "aria-labelledby": "TabPanelTitle-" + $tab_panels[i].id,
           "role": "tabpanel",
           "aria-hidden": "true"
         });
@@ -325,11 +325,11 @@
     Tabs.prototype.updateAccordionAria = function () {
       var currentTab = this.currentTab;
       if (currentTab.$tab_panel.hasClass(this.options.accordion.closed_class)) {
-        currentTab.$tab_panel.attr("aria-hidden", "true");
-        currentTab.currentTab.$title.attr("aria-expanded", "false");
+        currentTab.$tab_panel.attr("aria-hidden", "true").attr("aria-expanded", "false");
+        currentTab.$title.attr("aria-expanded", "false");
       }
       else {
-        currentTab.$tab_panel.attr("aria-hidden", "false");
+        currentTab.$tab_panel.attr("aria-hidden", "false").attr("aria-expanded", "true");
         currentTab.$title.attr("aria-expanded", "true");
       }
     };
@@ -380,6 +380,7 @@
 
   $(function () {
     Window.Tabs = Tabs;
-    new Window.Tabs($("#TabContainer").attr("role","tablist"));
+    new Window.Tabs($("#TabContainer"));
+    $("#TabContainer").find(".accordion-wrapper").attr("role","tablist");
   });
 }).call(this);
