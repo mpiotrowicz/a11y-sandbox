@@ -20,6 +20,7 @@
       %p semantics then of the ul somehow apply to the buttons?
       %p NVDA says "level 2" when in responsive mode for the accordion tabs
       %p Rev 90 removing collapsed from tab version, only adding to accordion
+      %p also, NVDA really cares if you have aria-labelledby and aria-controls on different elements, or rather, probably because I was using aria-labelledby and pointing to the tablist li, which had role="presentation". Either way in this case, NVDA recognized the tabs but not the tab list, so it kept announcing tab 1 of 1 for each tab
     %h2#TabPanelTitle-Tab3.tabs-container__title Tab 3
     #Tab3.tabs-container__panel{"data-title" => "Tab 3"}
       %h3 Tab 3
