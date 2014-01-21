@@ -1,6 +1,6 @@
 a11y-sandbox
 ============
 
-A place for my accessibility-minded prototypes. 
+A place for prototypes related to accessibility. Poke around, I'm not promising anything works or is useful.
 
-**Under Construction**
+**Under Construction - no, really**
