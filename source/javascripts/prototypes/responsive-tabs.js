@@ -1,3 +1,4 @@
+/* global Handlebars */
 (function () {
   var Tabs;
 
@@ -31,6 +32,7 @@
       this.options = $.extend({}, defaults, options);
       this.currentTab = null;
       this.init();
+
     }
 
     /**
@@ -129,7 +131,7 @@
      */
     Tabs.prototype.updateTabNav = function () {
       var currentTab = this.currentTab;
-      console.log(currentTab);
+      //console.log(currentTab);
 
       currentTab.$navItem = this.$tabNavItems.eq(currentTab.position).addClass(this.options.tab_nav_class_open);
       currentTab.$navItem
@@ -183,7 +185,7 @@
           break;
         case keyCodes.RIGHT:
         case keyCodes.DOWN:
-          currentIndex++
+          currentIndex++;
           if (currentIndex >= this.tabData.length) {
               currentIndex = 0;
           }
@@ -269,7 +271,7 @@
         position: this.$tab_panels.index($tab_panel)
       };
 
-      console.log($tab_panel);
+      //console.log($tab_panel);
       if (this.tabNav) {
         this.updateTabNav();
       }
@@ -379,8 +381,8 @@
   })();
 
   $(function () {
-    Window.Tabs = Tabs;
-    new Window.Tabs($("#TabContainer"));
+    window.Tabs = Tabs;
+    new window.Tabs($("#TabContainer"));
     $("#TabContainer").find(".accordion-wrapper").attr("role","tablist");
   });
 }).call(this);
