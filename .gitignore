@@ -3,7 +3,7 @@
 .sass-cache
 .scssc
 source/bower_components
-
+build/
 tmp
 
 *.zip
