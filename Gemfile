@@ -9,3 +9,5 @@ gem "middleman-livereload", "~> 3.1.0"
 
 gem "sprockets-sass"
 gem "sprockets-helpers"
+
+gem 'middleman-gh-pages'

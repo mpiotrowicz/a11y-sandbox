@@ -1,7 +1,9 @@
 require "sprockets-sass"
 require "sprockets-helpers"
 require "sass"
+require 'middleman-gh-pages'
 
+activate :relative_assets
 set :relative_links, true
 
 ###
