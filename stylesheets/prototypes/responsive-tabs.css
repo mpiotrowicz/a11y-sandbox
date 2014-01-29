@@ -1,0 +1,93 @@
+.tabs-container__panel {
+  background: #fff;
+  padding: 1.5em;
+}
+@media (min-width: 49.8125em) {
+    .tabs-nav-init .tabs-container__title,
+    .tabs-nav-init .tabs-container__panel {
+        display:none;
+    }
+
+    .tabs-nav-init .tabs-container__panel[aria-hidden="false"] {
+        display:block
+    }
+
+    .tabs-navigation {
+        width: auto;
+        overflow:hidden;
+        position:relative;
+        z-index:10;
+        box-shadow:inset 0 -1px #dddddd;
+    }
+
+    .tabs-navigation li {
+        display:table-cell;
+        vertical-align:top;
+        -webkit-box-shadow:inset 1px 0 #dddddd;
+        -moz-box-shadow:inset 1px 0 #dddddd;
+        box-shadow:inset 1px 0 #dddddd;
+    }
+
+    .tabs-navigation button {
+        position:relative;
+        text-decoration:none;
+        cursor:default;
+        line-height:1;
+        font-size:1.125em;
+        padding:1.22222em;
+        border: none;
+        background: #ccc;
+        margin: 0;
+        box-shadow:inset 1px 0 #dddddd,inset -1px 0 #dddddd;
+    }
+
+    .tabs-navigation .tabs-navigation__item--current {
+        color:#6a6a6a;
+        background: #fff;
+        z-index: 10;
+    }
+}
+@media (min-width: 49.8125em) and (max-width: 59.9375em) {
+    .tabs-init .tabs-navigation button {
+        font-size:1em;
+        padding:1.25em 0.9375em
+    }
+}
+@media (max-width: 49.75em) {
+    .tabs-navigation, .tabs-init .tabs-container__panel, .tabs-init .accordion--closed .tabs-container__panel {
+        display:none
+    }
+    .tabs-init .tabs-container__panel[aria-hidden="false"] {
+        display:block
+    }
+
+    .tabs-init {
+        border-top:solid 1px #dddddd;
+        margin-left:-1.5em;
+        margin-right:-1.5em
+    }
+
+    .tabs-init .tabs-container__title {
+        padding:1em 1.5em;
+        cursor: pointer;
+    }
+
+    .tabs-init .accordion--closed .tabs-container__title, .tabs-init .tabs-container__title {
+        background: #ddd;
+    }
+
+
+    .tabs-container__panel--current {
+        border-bottom:solid 1px #dddddd;
+    }
+
+    .tabs-container__title[aria-selected="true"] {
+        background:#fff;
+        color:#6a6a6a;
+        font-weight:bold;
+        border-bottom:solid 1px #dddddd;
+    }
+    .tabs-container__panel--current.accordion--closed {
+        border-bottom:none;
+    }
+}

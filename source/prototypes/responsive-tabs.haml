@@ -1,0 +1,31 @@
+- content_for :cssheader do
+  = stylesheet_link_tag "prototypes/responsive-tabs.css"
+
+%h1 Progressively-Enhanced Responsive, Accessible Tab Navigation
+%ul
+  %li ARIA-enabled tabs
+  %li Turns into an accordion on tablet-mobile
+  %li works with JS disabled
+  %li ARIA works cross states
+#TabContainer
+  .accordion-wrapper
+    %h2#TabPanelTitle-Tab1.tabs-container__title Tab 1
+    #Tab1.tabs-container__panel{"data-title" => "Tab1"}
+      %p First Tab Panel
+    %h2#TabPanelTitle-Tab2.tabs-container__title Tab 2
+    #Tab2.tabs-container__panel{"data-title" => "Tab 2"}
+      %p Experimenting where role="tablist" goes given that there are two sets of controllers
+      %p when added at the top level, the ul tab controllers don't work, but the h3 levels do
+      %p when a wrapper is added, such that h3's are no longer direct descendents of the role="tablist", they still work
+      %p semantics then of the ul somehow apply to the buttons?
+      %p NVDA says "level 2" when in responsive mode for the accordion tabs
+      %p Rev 90 removing collapsed from tab version, only adding to accordion
+      %p also, NVDA really cares if you have aria-labelledby and aria-controls on different elements, or rather, probably because I was using aria-labelledby and pointing to the tablist li, which had role="presentation". Either way in this case, NVDA recognized the tabs but not the tab list, so it kept announcing tab 1 of 1 for each tab
+    %h2#TabPanelTitle-Tab3.tabs-container__title Tab 3
+    #Tab3.tabs-container__panel{"data-title" => "Tab 3"}
+      %h3 Tab 3
+      %p Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin et pulvinar eros, ut feugiat lacus. Duis convallis ligula id tempus rhoncus. Curabitur tempus metus sit amet accumsan pulvinar. Pellentesque sed aliquam nisl. Sed libero tortor, posuere quis quam sed, ultrices feugiat nulla. Fusce ullamcorper odio eget tempus rhoncus. Etiam lacinia odio quis faucibus auctor. Curabitur a velit vel nisi facilisis vulputate. Vivamus feugiat, arcu eget accumsan feugiat, purus risus aliquam justo, id fermentum mauris dolor sit amet libero. Aenean laoreet vel justo et eleifend. Nulla facilisi. Quisque sit amet arcu sit amet nibh sagittis viverra. Mauris fringilla cursus ipsum et mollis. Cras eget sapien consequat, tincidunt enim vitae, vehicula lacus. In tristique venenatis urna, nec tincidunt nisl vulputate a. Curabitur dictum neque non tempus rhoncus.
+
+
+- content_for :jsfooter do
+  = javascript_include_tag "prototypes/responsive-tabs"
