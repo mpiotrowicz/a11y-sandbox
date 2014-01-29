@@ -11,6 +11,7 @@
     %title= data.page.title || "Prototypes"
     %meta{:content => "width=device-width", :name => "viewport"}
 
+    %link{rel:"shortcut icon", href:"/favicon.ico"}
     -# There's a separate stylesheet for browsers that support media queries and for those that don't
     -# see Application.css for more info
     = stylesheet_link_tag "common"
@@ -26,8 +27,9 @@
       %main{:role => "main"}= yield
       %footer
 
+    %script{:src => "http://code.jquery.com/jquery-1.11.0.min.js"}
     :javascript
-      window.jQuery || document.write('<script src="/javascripts/vendor/jquery.js"><\/script>')
+      window.jQuery || document.write('<script src="../javascripts/vendor/jquery.js"><\/script>')
     = javascript_include_tag "vendor/handlebars.js"
     = javascript_include_tag "common"
 

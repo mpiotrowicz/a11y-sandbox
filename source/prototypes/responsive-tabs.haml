@@ -3,10 +3,9 @@
 
 %h1 Progressively-Enhanced Responsive, Accessible Tab Navigation
 %ul
-  %li ARIA-enabled tabs
-  %li Turns into an accordion on tablet-mobile
-  %li works with JS disabled
-  %li ARIA works cross states
+  %li Turns into an accordion on tablet and mobile
+  %li Works with JS disabled (content is still available)
+  %li ARIA works across states
 #TabContainer
   .accordion-wrapper
     %h2#TabPanelTitle-Tab1.tabs-container__title Tab 1
@@ -14,13 +13,8 @@
       %p First Tab Panel
     %h2#TabPanelTitle-Tab2.tabs-container__title Tab 2
     #Tab2.tabs-container__panel{"data-title" => "Tab 2"}
-      %p Experimenting where role="tablist" goes given that there are two sets of controllers
-      %p when added at the top level, the ul tab controllers don't work, but the h3 levels do
-      %p when a wrapper is added, such that h3's are no longer direct descendents of the role="tablist", they still work
-      %p semantics then of the ul somehow apply to the buttons?
-      %p NVDA says "level 2" when in responsive mode for the accordion tabs
-      %p Rev 90 removing collapsed from tab version, only adding to accordion
-      %p also, NVDA really cares if you have aria-labelledby and aria-controls on different elements, or rather, probably because I was using aria-labelledby and pointing to the tablist li, which had role="presentation". Either way in this case, NVDA recognized the tabs but not the tab list, so it kept announcing tab 1 of 1 for each tab
+      %h3 Tab 2
+      %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
     %h2#TabPanelTitle-Tab3.tabs-container__title Tab 3
     #Tab3.tabs-container__panel{"data-title" => "Tab 3"}
       %h3 Tab 3

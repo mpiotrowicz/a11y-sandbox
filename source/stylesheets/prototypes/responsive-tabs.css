@@ -1,11 +1,6 @@
-body {
-    padding: 20px;
-    font-family: "helvetica", arial, sans-serif;
-    background: #999;
-}
 .tabs-container__panel {
   background: #fff;
-  padding: 20px;
+  padding: 1.5em;
 }
 @media (min-width: 49.8125em) {
     .tabs-nav-init .tabs-container__title,
@@ -18,7 +13,7 @@ body {
     }
 
     .tabs-navigation {
-        width:100%;
+        width: auto;
         overflow:hidden;
         position:relative;
         z-index:10;
@@ -79,7 +74,6 @@ body {
 
     .tabs-init .accordion--closed .tabs-container__title, .tabs-init .tabs-container__title {
         background: #ddd;
-        color:#651f97;
     }
 
 

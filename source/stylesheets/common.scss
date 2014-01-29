@@ -3,3 +3,19 @@
 //HTML5 Boilerplate + Normalize Built In
 *= require "vendor/html5bp.css"
 */
+
+body {
+    padding: 1.5em;
+    font-family: "helvetica", arial, sans-serif;
+    background: #999;
+}
+
+*, *:before, *:after {
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+}
+
+.gutter-bottom {
+  margin-bottom: 20px;
+}
