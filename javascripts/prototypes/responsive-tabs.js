@@ -162,7 +162,7 @@
         UP: 38
       };
 
-      // disabling key down and key up due to UAT request where scrolling page with keys would change tabs
+      // disabling key down and keys temporarily
       switch (e.keyCode) {
         case keyCodes.LEFT:
         case keyCodes.UP:
@@ -200,13 +200,6 @@
     Tabs.prototype.handleEnter = function(currentIndex) {
       // enter will either toggle an accordion or select a brand new item, depending on what mode we're in
       // so we have to deal with the currently focused element rather than the selected tab
-      // since if we're in a screenreader, the focused element may not be the current element
-      // screenreaders will want to manually select the tab
-      // otherwise it follows as they move through the menu
-
-      // also you have to do it this way because the focus area is either from the button in an li or an h3
-      // so bypass the event originator altogether
-
       var currentTabByFocusIndex = document.getElementById(document.activeElement.getAttribute("aria-controls"));
 
       if (currentTabByFocusIndex !== this.currentTab.$tab_panel.get(0)) {
@@ -217,16 +210,15 @@
 
     /**
      * helper to identify if the clicked tab is what's currently open
-     * @param $tab - jQuery element of the tab that's being evaluated
+     * @param $tab_panel - jQuery element of the tab that's being evaluated
      */
-    Tabs.prototype.isCurrentTab = function ($tabPanel) {
-      return this.currentTab.$tab_panel.get(0) == $tabPanel.get(0);
+    Tabs.prototype.isCurrentTab = function ($tab_panel) {
+      return this.currentTab.$tab_panel.get(0) == $tab_panel.get(0);
     };
 
     /**
      * closes a tab if there's one open and a new one has been activated
      * Only one tab can be open at any given time
-     * @param $tab - jquery element of the tab that's to be closed
      */
     Tabs.prototype.closeTab = function () {
       var currentTab = this.currentTab;
@@ -253,9 +245,9 @@
       this.currentTab = null;
     };
 
-      /**
+    /**
      * Opens the tab
-     * @param $tab - jQuery element of the tab that's being opened
+     * @param $tab_panel - jQuery element of the tab that's being opened
      */
     Tabs.prototype.openTab = function ($tab_panel) {
       var options = this.options;
@@ -281,7 +273,7 @@
 
     /**
      * Binds any events specific to Accordion functionality (tablet and mobile only)
-     * Aria won't work here because:
+     * Aria initially didn't work here because:
       * there's no tablist role on any container
       * the tab panels are controlled by the nav and not the headers
      */
@@ -339,15 +331,15 @@
 
   /**
    * Helper to open an accordion. Only 1 accordion can be open at a time, so this function actually just maps back onto the openTab() function, while removing the special "accordion.closed_class" class
-   * @param $tabPanel - jQuery element of the tab being opened (tab = accordion in this case, it just looks like an accordion in mobile/tablet)
+   * @param $tab_panel - jQuery element of the tab being opened (tab = accordion in this case, it just looks like an accordion in mobile/tablet)
    */
-    Tabs.prototype.openAccordion = function ($tabPanel) {
+    Tabs.prototype.openAccordion = function ($tab_panel) {
       this.$tab_panels.filter("." + this.options.accordion.closed_class).removeClass(this.options.accordion.closed_class);
       this.currentTab.$title.attr("aria-expanded", "false");
       this.closeTab();
-      this.openTab($tabPanel);
+      this.openTab($tab_panel);
       $("html, body").animate({
-        scrollTop: $tabPanel.offset().top - 25
+        scrollTop: $tab_panel.offset().top - 25
       }, 200);
       this.currentTab.$title.attr("aria-expanded", "true").focus();
     };
