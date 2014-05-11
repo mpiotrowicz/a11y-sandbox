@@ -8,7 +8,7 @@
         display:none;
     }
 
-    .tabs-nav-init .tabs-container__panel[aria-hidden="false"] {
+    .tabs-container__panel[aria-hidden="false"] {
         display:block
     }
 
@@ -28,7 +28,7 @@
         box-shadow:inset 1px 0 #dddddd;
     }
 
-    .tabs-navigation button {
+    .tabs-navigation__button {
         position:relative;
         text-decoration:none;
         cursor:default;
@@ -41,24 +41,16 @@
         box-shadow:inset 1px 0 #dddddd,inset -1px 0 #dddddd;
     }
 
-    .tabs-navigation .tabs-navigation__item--current {
+    .tabs-navigation__button[aria-selected="true"] {
         color:#6a6a6a;
         background: #fff;
         z-index: 10;
     }
 }
-@media (min-width: 49.8125em) and (max-width: 59.9375em) {
-    .tabs-init .tabs-navigation button {
-        font-size:1em;
-        padding:1.25em 0.9375em
-    }
-}
+
 @media (max-width: 49.75em) {
     .tabs-navigation, .tabs-init .tabs-container__panel, .tabs-init .accordion--closed .tabs-container__panel {
         display:none
-    }
-    .tabs-init .tabs-container__panel[aria-hidden="false"] {
-        display:block
     }
 
     .tabs-init {
@@ -72,13 +64,15 @@
         cursor: pointer;
     }
 
-    .tabs-init .accordion--closed .tabs-container__title, .tabs-init .tabs-container__title {
+    .accordion--closed .tabs-container__title,
+    .tabs-init .tabs-container__title {
         background: #ddd;
+        border-bottom: solid 1px #a1a1a1;
     }
 
-
-    .tabs-container__panel--current {
-        border-bottom:solid 1px #dddddd;
+    .tabs-container__panel[aria-hidden="false"] {
+        display:block;
+        border-bottom: solid 1px #a1a1a1;
     }
 
     .tabs-container__title[aria-selected="true"] {
@@ -87,7 +81,32 @@
         font-weight:bold;
         border-bottom:solid 1px #dddddd;
     }
-    .tabs-container__panel--current.accordion--closed {
+
+    .tabs-container__panel.accordion--closed {
         border-bottom:none;
+    }
+}
+
+/*============================================================================
+  Demo Styles
+==============================================================================*/
+
+h1 {
+  line-height: 1;
+  margin: 0 0 20px;
+}
+.sub-title {
+  font-size: 20px;
+}
+
+.desc {
+  margin-bottom: 20px;
+}
+
+/*================ Responsive Typography ================*/
+@media (min-width: 49.8125em) and (max-width: 59.9375em) {
+    .tabs-navigation__button {
+        font-size:1em;
+        padding:1.25em 0.9375em
     }
 }
