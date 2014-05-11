@@ -1,0 +1,36 @@
+body {
+  background: #fff;
+}
+.form-red {
+  color: #CF0B1A;
+  input {
+    border: solid 2px #CF0B1A;
+  }
+}
+
+.form-green {
+  color: #6ED31F;
+  input {
+    border: solid 2px #6ED31F;
+  }
+}
+
+p {
+  max-width: 300px;
+}
+
+.container {
+  padding: 200px;
+  background: #ccc;
+}
+
+label, input {
+  display: block;
+  margin-bottom: 10px;
+}
+
+.phone-input {
+  float: left;
+  width: 60px;
+  margin-right: 10px;
+}

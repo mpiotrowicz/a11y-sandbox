@@ -1,0 +1,90 @@
+- content_for :cssheader do
+  = stylesheet_link_tag "prototypes/zamples.css"
+
+-#
+  %form
+    %p.form-red
+      Something went wrong! Please review your form
+
+    .form-red.gutter-bottom
+      %label
+        First Name *
+        %br
+        %span Field required, please provide your first name
+      %input
+    .form-green
+      %label Email
+      %input
+
+  .container
+    %br
+    %br
+    %br
+    %label Flavors
+    .tiny-container
+      %select
+        %option BBQ
+        %option Regular
+        %option Salt and Vinegar
+        %option Sour Cream and Onion
+
+
+
+-#%section{"aria-label"=>"Featured Article"}
+-#  %h1 werewrewrwe
+-#%form{"aria-labelledby"=>"ContactHeading"}
+-#  %h2#ContactHeading
+
+-#  %label{"for"=>"phone-numbers"}
+
+-# aria-labeleld by doesn't have to be inside the group to work as a label
+#testDiv{"aria-labelledby" => "HeadingAbout", "role" =>"region"}
+  %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+  %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+  %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+%hr
+#testDiv{"aria-labelledby" => "HeadingAbout2", "role"=>"region"}
+  %h2#HeadingAbout2 Test for NVDA
+  %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+  %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+  %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+-# this doesn't work in NVDA
+#testDiv2{"aria-label"=>"blah blah"}
+  %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+  %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+  %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+
+%section{"aria-labelledby" => "HeadingAbout"}
+  %h1#HeadingAbout About Potato Chips
+  %p Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.
+
+%p the only aria-label that worked was the one on chip navigation in NVDA, you can't fake an aria-region by creating a label :(
+%br
+%br
+
+%nav{"aria-label" => "Chip Section Navigation"}
+  %ul
+    %li
+      %a{href: "/types"} Flavours
+    %li
+      %a{href: "/types"} Chip Debates - Ruffles or Plain?
+    %li
+      %a{href: "/types"} Kettle Chips
+
+%br
+%br
+%br
+%br
+
+  %label{for: "inputZip"} ZIP Code
+  %input#inputZip{"aria-describedby" => "ZipHelp", type: "text"}
+  %span#ZipHelp Format: '90210'
+  %br
+  %br
+  %br
+  %br
+  %span.pseudo-label Phone Number
+  %br
+  %input.phone-input{"aria-label" => "Phone area code", type: "text"}
+  %input.phone-input{"aria-label" => "Phone first 3 digits", type: "text"}
+  %input.phone-input{"aria-label" => "Phone last 4 digits", type: "text"}
