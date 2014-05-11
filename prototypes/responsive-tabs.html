@@ -17,28 +17,38 @@
   <body class=''>
     <!--[if lt IE 7]> <p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p> <![endif]-->
     <div id='ContentWrapper'>
-      <header class='site-header'></header>
+      <header class='site-header' role='banner'>
+        <p>banner</p>
+      </header>
       <main role='main'>
-        <h1>Progressively-Enhanced Responsive, Accessible Tab Navigation</h1>
-        <ul>
+        <h1>
+          Work In-progress:
+          <br>
+          <span class='sub-title'>
+            Progressively-Enhanced Responsive, Accessible Tab Navigation Plugin
+          </span>
+        </h1>
+        <ul class='desc'>
           <li>Turns into an accordion on tablet and mobile</li>
-          <li>Works with JS disabled (content is still available)</li>
-          <li>ARIA works across states</li>
+          <li>Works with JS disabled (content is still available and appears as headings + text, no tabs)</li>
+          <li>ARIA works across states, dynamically updated via the JS</li>
+          <li>Keyboard accessible</li>
         </ul>
         <div id='TabContainer'>
           <div class='accordion-wrapper'>
             <h2 class='tabs-container__title' id='TabPanelTitle-Tab1'>Tab 1</h2>
-            <div class='tabs-container__panel' data-title='Tab1' id='Tab1'>
+            <div class='tabs-container__panel' id='Tab1'>
               <p>First Tab Panel</p>
+              <a href='#'>Link</a>
             </div>
             <h2 class='tabs-container__title' id='TabPanelTitle-Tab2'>Tab 2</h2>
-            <div class='tabs-container__panel' data-title='Tab 2' id='Tab2'>
-              <h3>Tab 2</h3>
+            <div class='tabs-container__panel' id='Tab2'>
+              <h3>Tab 2 Content</h3>
               <p>Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Aenean commodo ligula eget dolor. Aenean massa. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Donec quam felis, ultricies nec, pellentesque eu, pretium quis, sem. Nulla consequat massa quis enim. Donec pede justo, fringilla vel, aliquet nec, vulputate eget, arcu. In enim justo, rhoncus ut, imperdiet a, venenatis vitae, justo. Nullam dictum felis eu pede mollis pretium.</p>
             </div>
             <h2 class='tabs-container__title' id='TabPanelTitle-Tab3'>Tab 3</h2>
-            <div class='tabs-container__panel' data-title='Tab 3' id='Tab3'>
-              <h3>Tab 3</h3>
+            <div class='tabs-container__panel' id='Tab3'>
+              <h3>Tab 3 Content</h3>
               <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin et pulvinar eros, ut feugiat lacus. Duis convallis ligula id tempus rhoncus. Curabitur tempus metus sit amet accumsan pulvinar. Pellentesque sed aliquam nisl. Sed libero tortor, posuere quis quam sed, ultrices feugiat nulla. Fusce ullamcorper odio eget tempus rhoncus. Etiam lacinia odio quis faucibus auctor. Curabitur a velit vel nisi facilisis vulputate. Vivamus feugiat, arcu eget accumsan feugiat, purus risus aliquam justo, id fermentum mauris dolor sit amet libero. Aenean laoreet vel justo et eleifend. Nulla facilisi. Quisque sit amet arcu sit amet nibh sagittis viverra. Mauris fringilla cursus ipsum et mollis. Cras eget sapien consequat, tincidunt enim vitae, vehicula lacus. In tristique venenatis urna, nec tincidunt nisl vulputate a. Curabitur dictum neque non tempus rhoncus.</p>
             </div>
           </div>
