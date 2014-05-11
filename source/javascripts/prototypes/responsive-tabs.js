@@ -4,8 +4,9 @@
 
   Tabs = (function () {
 
+    // tabbbed nav controls the content but doesn't label it
     var templates = {
-      tplTabNav: Handlebars.compile("<ul class='inline-list tabs-navigation show-desktop' role='tablist'>{{#each tab}}<li role='presentation' class='tab-menu-item'><button data-id='{{tabId}}' id='TabController-{{tabId}}' class='txt-btn' role='tab' aria-selected='false' aria-controls='{{tabId}}' tabindex=-1>{{tabTitle}}</button></li>{{/each}}</ul>")
+      tplTabNav: Handlebars.compile("<ul class='inline-list tabs-navigation show-desktop' role='tablist'>{{#each tab}}<li role='presentation' class='tab-menu-item'><button data-id='{{tabId}}' id='TabController-{{tabId}}' class='txt-btn tabs-navigation__button' role='tab' aria-selected='false' aria-controls='{{tabId}}' tabindex=-1 aria-expanded='false'>{{tabTitle}}</button></li>{{/each}}</ul>")
     };
 
     /**
@@ -19,10 +20,8 @@
       var defaults = {
         default_tab: "0", // the eq() value of the default tab to open on page load
         tab_class_panel: ".tabs-container__panel", // parent of the tab detail + tab title element
-        tab_class_panel_open: "tabs-container__panel--current", // class for tab container when the tab is open
         tab_class_title: ".tabs-container__title", // the class of the title for each tab, added usually to an h3 element
         tab_nav_id: "TabNav", // ID for the tab navigation
-        tab_nav_class_open: "tabs-navigation__item--current", // class for navigation when associated tab is open
         accordion: {
           closed_class: "accordion--closed" // since the accordion can be closed for all tabs, extra class for just closing the accordion, even if the tab is technically active
         }
@@ -47,41 +46,46 @@
         $tab_panels = this.$tab_panels,
         len = $tab_panels.length,
         $currentPanel,
+        $panelTitle,
         currentPanelData;
 
-      // for each of the tabs, fetch its title and ID from the HTML and save to a data object for that tab
+      // for each of the tabs, fetch its title and ID from the HTML
+      // save to a data object for that tab
       for (i; i < len; i++) {
         $currentPanel = $($tab_panels[i]);
+        $panelTitle = $currentPanel.prev(this.options.tab_class_title);
         currentPanelData = {
           tabId: $tab_panels[i].id,
-          tabTitle: $currentPanel.data("title")
+          tabTitle: $panelTitle.text()
         };
 
-        // save the data to an array of all tab data. The array will be used to construct the navigation
+        // save the data to an array of all tab data.
+        // array will be used to construct the navigation
         this.tabData.push(currentPanelData);
 
         // witin the tab, find the details and update the Aria attributes
         $currentPanel.attr({
-          //"aria-labelledby": "TabController-" + $tab_panels[i].id,
-          "aria-labelledby": "TabPanelTitle-" + $tab_panels[i].id,
           "role": "tabpanel",
           "aria-hidden": "true"
         });
 
         // witin the tab, find the title and update the Aria attributes
         // next, append the required icon to the title, used on tablet and mobile
-        $currentPanel.prev(this.options.tab_class_title)
+        // labels and controls it
+        $panelTitle
           .attr({
             "tabindex": "-1",
             "role": "tab",
             "aria-selected": "false",
-            "aria-controls": $tab_panels[i].id
+            "aria-controls": $currentPanel.get(0).id,
+            "aria-expanded": "false"
           });
       }
     };
 
     /**
-     * Builds the HTML for the tabbed navigation, for use in desktop only if there's more than 1 element to be tabbed
+     * Builds the HTML for the tabbed navigation
+     * for use in desktop only if there's more than 1 element to be tabbed
      */
     Tabs.prototype.createTabNav = function () {
       this.tabNav = true;
@@ -92,6 +96,7 @@
 
       // save the reference of the navigation
       this.$tabNavItems = this.$tabNav.find("button");
+
       // add class to indicate that there's a navigation
       this.$container.addClass("tabs-nav-init");
     };
@@ -113,6 +118,7 @@
         }
       });
 
+      // do i need this? - yes for arrows!
       this.$tabNav.on("keydown", "button", function (e) {
         var currentIndex = app.keyHandler(e);
         if (currentIndex !== null) {
@@ -120,10 +126,10 @@
           var panelId = app.tabData[currentIndex].tabId;
           app.openTab($(document.getElementById(panelId)));
           app.currentTab.$navItem.focus();// focus here so doesn't steal focus on page load
-          //console.log("should be focus");
         }
       });
     };
+
 
     /**
      * Updates the dynamically created tab nav in desktop once a new tab has been opened
@@ -131,14 +137,13 @@
      */
     Tabs.prototype.updateTabNav = function () {
       var currentTab = this.currentTab;
-      //console.log(currentTab);
 
-      currentTab.$navItem = this.$tabNavItems.eq(currentTab.position).addClass(this.options.tab_nav_class_open);
-      currentTab.$navItem
-        .attr({
-          "tabindex": "0",
-          "aria-selected": "true"
-        });
+      currentTab.$navItem = this.$tabNavItems.eq(currentTab.position);
+      currentTab.$navItem.attr({
+        "tabindex": "0",
+        "aria-selected": "true",
+        "aria-expanded": "true"
+      });
     };
 
     /**
@@ -222,22 +227,24 @@
     Tabs.prototype.closeTab = function () {
       var currentTab = this.currentTab;
 
-      currentTab.$title.attr({
-        "tabindex": "-1",
-        "aria-selected": "false"
-      });
-
       currentTab.$tab_panel
-        .removeClass(this.options.tab_class_panel_open)
         .attr({
           "aria-hidden": "true"
         });
 
+      currentTab.$title.attr({
+        "tabindex": "-1",
+        // TODO needed on the accordion?
+        "aria-selected": "false",
+        "aria-expanded" : "false"
+      });
+
       if (this.tabNav) {
-        currentTab.$navItem.removeClass(this.options.tab_nav_class_open)
+        currentTab.$navItem
           .attr({
             "tabindex": "-1",
-            "aria-selected": "false"
+            "aria-selected": "false",
+            "aria-expanded" : "false"
           });
       }
 
@@ -252,7 +259,6 @@
       var options = this.options;
       this.currentTab = {
         $tab_panel: $tab_panel
-          .addClass(options.tab_class_panel_open)
           .attr({
             "aria-hidden": "false"
           }),
@@ -305,7 +311,6 @@
       // if it's the current tab, we want to just toggle it opened or closed for the viewer
       // we never actually disable the current tab without opening a new one, otherwise on desktop you can have the scenario where there's no open tab
       if (this.isCurrentTab($tabPanel)) {
-        // todo update aria state
         $tabPanel.toggleClass(this.options.accordion.closed_class);
         this.updateAccordionAria();
         return false;
@@ -319,11 +324,11 @@
     Tabs.prototype.updateAccordionAria = function () {
       var currentTab = this.currentTab;
       if (currentTab.$tab_panel.hasClass(this.options.accordion.closed_class)) {
-        currentTab.$tab_panel.attr("aria-hidden", "true").attr("aria-expanded", "false");
+        currentTab.$tab_panel.attr("aria-hidden", "true");
         currentTab.$title.attr("aria-expanded", "false");
       }
       else {
-        currentTab.$tab_panel.attr("aria-hidden", "false").attr("aria-expanded", "true");
+        currentTab.$tab_panel.attr("aria-hidden", "false");
         currentTab.$title.attr("aria-expanded", "true");
       }
     };
