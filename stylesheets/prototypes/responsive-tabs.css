@@ -30,6 +30,8 @@
 
     .tabs-navigation__button {
         position:relative;
+        display: inline-block;
+        color: #414040;
         text-decoration:none;
         cursor:default;
         line-height:1;
@@ -41,8 +43,12 @@
         box-shadow:inset 1px 0 #dddddd,inset -1px 0 #dddddd;
     }
 
+    .tabs-navigation__button:hover {
+      color: #2B2B2B;
+    }
+
     .tabs-navigation__button[aria-selected="true"] {
-        color:#6a6a6a;
+        color: #000;
         background: #fff;
         z-index: 10;
     }
