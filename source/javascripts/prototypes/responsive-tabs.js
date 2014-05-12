@@ -6,7 +6,7 @@
 
     // tabbbed nav controls the content but doesn't label it
     var templates = {
-      tplTabNav: Handlebars.compile("<ul class='inline-list tabs-navigation show-desktop' role='tablist'>{{#each tab}}<li role='presentation' class='tab-menu-item'><button data-id='{{tabId}}' id='TabController-{{tabId}}' class='txt-btn tabs-navigation__button' role='tab' aria-selected='false' aria-controls='{{tabId}}' tabindex=-1 aria-expanded='false'>{{tabTitle}}</button></li>{{/each}}</ul>")
+      tplTabNav: Handlebars.compile("<ul class='inline-list tabs-navigation show-desktop' role='tablist'>{{#each tab}}<li role='presentation' class='tab-menu-item'><a href='#{{tabId}}' id='TabController-{{tabId}}' class='txt-btn tabs-navigation__button' role='tab' aria-selected='false' aria-controls='{{tabId}}' tabindex=-1 aria-expanded='false'>{{tabTitle}}</a></li>{{/each}}</ul>")
     };
 
     /**
@@ -95,7 +95,7 @@
       })).prependTo(this.$container);
 
       // save the reference of the navigation
-      this.$tabNavItems = this.$tabNav.find("button");
+      this.$tabNavItems = this.$tabNav.find("a");
 
       // add class to indicate that there's a navigation
       this.$container.addClass("tabs-nav-init");
@@ -107,10 +107,10 @@
     Tabs.prototype.bindNavEvents = function () {
       var app = this;
 
-      this.$tabNav.on("click", "button", function (e) {
+      this.$tabNav.on("click", "a", function (e) {
         e.preventDefault();
         var $target = $(e.currentTarget),
-          $tabPanel = $(document.getElementById($target.data("id")));
+          $tabPanel = $(this.getAttribute('href'));
         if (!app.isCurrentTab($tabPanel)) {
           app.closeTab();
           app.openTab($tabPanel);
@@ -119,7 +119,7 @@
       });
 
       // do i need this? - yes for arrows!
-      this.$tabNav.on("keydown", "button", function (e) {
+      this.$tabNav.on("keydown", "a", function (e) {
         var currentIndex = app.keyHandler(e);
         if (currentIndex !== null) {
           app.closeTab();
