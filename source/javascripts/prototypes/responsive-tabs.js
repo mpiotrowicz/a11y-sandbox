@@ -1,4 +1,5 @@
 /* global Handlebars */
+
 (function () {
   var Tabs;
 
@@ -66,7 +67,8 @@
         // witin the tab, find the details and update the Aria attributes
         $currentPanel.attr({
           "role": "tabpanel",
-          "aria-hidden": "true"
+          "aria-hidden": "true",
+          "tabindex" : "-1"
         });
 
         // witin the tab, find the title and update the Aria attributes
@@ -273,6 +275,7 @@
       if (this.tabNav) {
         this.updateTabNav();
       }
+      $tab_panel.focus();
     };
 
 
