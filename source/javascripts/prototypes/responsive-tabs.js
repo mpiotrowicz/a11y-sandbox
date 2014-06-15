@@ -76,6 +76,7 @@
           .attr({
             "tabindex": "-1",
             "role": "tab",
+            "aria-controls": currentPanelData.tabId,
             "aria-selected": "false",
             "aria-controls": $currentPanel.get(0).id,
             "aria-expanded": "false"
