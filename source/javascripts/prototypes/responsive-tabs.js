@@ -15,14 +15,14 @@
      * @param $options - any overrides to the classes set below
      */
     function Tabs($container, options) {
-      // set all the classes
+
       var defaults = {
-        default_tab: "0", // the eq() value of the default tab to open on page load
-        tab_class_panel: ".tabs-container__panel", // parent of the tab detail + tab title element
-        tab_class_title: ".tabs-container__title", // the class of the title for each tab, added usually to an h3 element
-        tab_nav_id: "TabNav", // ID for the tab navigation
+        default_tab: "0",                          // index of tab to open on page load
+        tab_class_panel: ".tabs-container__panel", // wrapper for each tab/accordion title and content
+        tab_class_title: ".tabs-container__title", // title element for each tab/accordion
+        tab_nav_id: "TabNav",                      // ID to provide the constructed tab navigation
         accordion: {
-          closed_class: "accordion--closed" // since the accordion can be closed for all tabs, extra class for just closing the accordion, even if the tab is technically active
+          closed_class: "accordion--closed"       // since the accordion can be closed for all tabs on mobile, extra class for just closing the accordion, even if the tab is technically active
         }
       };
 
@@ -40,6 +40,7 @@
      */
     Tabs.prototype.fetchTabData = function () {
       // array to store the data for all tabs in the widget
+      // array will be used to construct the navigation
       this.tabData = [];
       var i = 0,
         $tab_panels = this.$tab_panels,
@@ -58,19 +59,14 @@
           tabTitle: $panelTitle.text()
         };
 
-        // save the data to an array of all tab data.
-        // array will be used to construct the navigation
         this.tabData.push(currentPanelData);
 
-        // witin the tab, find the details and update the Aria attributes
+        // update ARIA attrs for the panel and accordion title
         $currentPanel.attr({
           "role": "tabpanel",
           "aria-hidden": "true"
         });
 
-        // witin the tab, find the title and update the Aria attributes
-        // next, append the required icon to the title, used on tablet and mobile
-        // labels and controls it
         $panelTitle
           .attr({
             "tabindex": "-1",
@@ -88,12 +84,10 @@
      */
     Tabs.prototype.createTabNav = function () {
       this.tabNav = true;
-      // use the tabData object to construct the buttons needed for the tab navigation, and append it to the container
       this.$tabNav = $(templates.tplTabNav({
         "tab": this.tabData
       })).prependTo(this.$container);
 
-      // save the reference of the navigation
       this.$tabNavItems = this.$tabNav.find("a");
 
       // add class to indicate that there's a navigation
@@ -113,7 +107,7 @@
         if (!app.isCurrentTab($tabPanel)) {
           app.closeTab();
           app.openTab($tabPanel);
-          app.currentTab.$navItem.focus(); // focus here so doesn't steal focus on page load
+          app.currentTab.$navItem.focus(); // focus only here so doesn't steal focus on page load
         }
       });
 
@@ -124,7 +118,7 @@
           app.closeTab();
           var panelId = app.tabData[currentIndex].tabId;
           app.openTab($(document.getElementById(panelId)));
-          app.currentTab.$navItem.focus();// focus here so doesn't steal focus on page load
+          app.currentTab.$navItem.focus(); // focus only here so doesn't steal focus on page load
         }
       });
     };
@@ -239,9 +233,9 @@
           "aria-hidden": "true"
         });
 
+      // update accordion title values as well so everything is in synch
       currentTab.$title.attr({
         "tabindex": "-1",
-        // TODO needed on the accordion?
         "aria-selected": "false",
         "aria-expanded" : "false"
       });
@@ -275,7 +269,7 @@
 
     /**
      * Binds any events specific to Accordion functionality (tablet and mobile only)
-     * Aria initially didn't work here because:
+     * ARIA initially didn't work here because:
       * there's no tablist role on any container
       * the tab panels are controlled by the nav and not the headers
      */
@@ -336,13 +330,19 @@
    */
     Tabs.prototype.openAccordion = function ($tab_panel) {
       this.$tab_panels.filter("." + this.options.accordion.closed_class).removeClass(this.options.accordion.closed_class);
-      this.currentTab.$title.attr("aria-expanded", "false");
+      this.currentTab.$title.attr({
+        "aria-expanded": "false",
+        "aria-selected": "false"
+      });
       this.closeTab();
       this.openTab($tab_panel);
       $("html, body").animate({
         scrollTop: $tab_panel.offset().top - 25
       }, 200);
-      this.currentTab.$title.attr("aria-expanded", "true").focus();
+      this.currentTab.$title.attr({
+        "aria-expanded" : "true",
+        "aria-selected" : "true"
+      }).focus();
     };
 
     /**
