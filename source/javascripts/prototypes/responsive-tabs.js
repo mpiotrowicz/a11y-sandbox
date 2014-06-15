@@ -4,7 +4,6 @@
 
   Tabs = (function () {
 
-    // tabbbed nav controls the content but doesn't label it
     var templates = {
       tplTabNav: Handlebars.compile("<ul class='inline-list tabs-navigation show-desktop' role='tablist'>{{#each tab}}<li role='presentation' class='tab-menu-item'><a href='#{{tabId}}' id='TabController-{{tabId}}' class='txt-btn tabs-navigation__button' role='tab' aria-selected='false' aria-controls='{{tabId}}' tabindex=-1 aria-expanded='false'>{{tabTitle}}</a></li>{{/each}}</ul>")
     };
@@ -78,7 +77,6 @@
             "role": "tab",
             "aria-controls": currentPanelData.tabId,
             "aria-selected": "false",
-            "aria-controls": $currentPanel.get(0).id,
             "aria-expanded": "false"
           });
       }
@@ -119,9 +117,9 @@
         }
       });
 
-      // do i need this? - yes for arrows!
+      // bind key navigation
       this.$tabNav.on("keydown", "a", function (e) {
-        var currentIndex = app.keyHandler(e);
+        var currentIndex = app.handleKeyPress(e);
         if (currentIndex !== null) {
           app.closeTab();
           var panelId = app.tabData[currentIndex].tabId;
@@ -131,26 +129,18 @@
       });
     };
 
-
     /**
-     * Updates the dynamically created tab nav in desktop once a new tab has been opened
-     * @param $tab - jQuery element for the tab that was just opened
+     * helper to identify if the clicked tab is what's currently open
+     * @param $tab_panel - jQuery element of the tab that's being evaluated
      */
-    Tabs.prototype.updateTabNav = function () {
-      var currentTab = this.currentTab;
-
-      currentTab.$navItem = this.$tabNavItems.eq(currentTab.position);
-      currentTab.$navItem.attr({
-        "tabindex": "0",
-        "aria-selected": "true",
-        "aria-expanded": "true"
-      });
+    Tabs.prototype.isCurrentTab = function ($tab_panel) {
+      return this.currentTab.$tab_panel.get(0) == $tab_panel.get(0);
     };
 
     /**
      * Key handler for tabs - allows arrow navigation
      */
-    Tabs.prototype.keyHandler = function (e) {
+    Tabs.prototype.handleKeyPress = function (e) {
       var keyCodes,
         currentIndex = this.currentTab.position;
       keyCodes = {
@@ -214,11 +204,27 @@
     };
 
     /**
-     * helper to identify if the clicked tab is what's currently open
-     * @param $tab_panel - jQuery element of the tab that's being evaluated
+     * Opens the tab
+     * @param $tab_panel - jQuery element of the tab that's being opened
      */
-    Tabs.prototype.isCurrentTab = function ($tab_panel) {
-      return this.currentTab.$tab_panel.get(0) == $tab_panel.get(0);
+    Tabs.prototype.openTab = function ($tab_panel) {
+      var options = this.options;
+      this.currentTab = {
+        $tab_panel: $tab_panel
+          .attr({
+            "aria-hidden": "false"
+          }),
+        $title: $tab_panel.prev(options.tab_class_title).attr({
+          "aria-selected": true,
+          "tabindex": "0"
+        }),
+        position: this.$tab_panels.index($tab_panel)
+      };
+
+      //console.log($tab_panel);
+      if (this.tabNav) {
+        this.updateTabNav();
+      }
     };
 
     /**
@@ -253,29 +259,19 @@
     };
 
     /**
-     * Opens the tab
-     * @param $tab_panel - jQuery element of the tab that's being opened
+     * Updates the dynamically created tab nav in desktop once a new tab has been opened
+     * @param $tab - jQuery element for the tab that was just opened
      */
-    Tabs.prototype.openTab = function ($tab_panel) {
-      var options = this.options;
-      this.currentTab = {
-        $tab_panel: $tab_panel
-          .attr({
-            "aria-hidden": "false"
-          }),
-        $title: $tab_panel.prev(options.tab_class_title).attr({
-          "aria-selected": true,
-          "tabindex": "0"
-        }),
-        position: this.$tab_panels.index($tab_panel)
-      };
+    Tabs.prototype.updateTabNav = function () {
+      var currentTab = this.currentTab;
 
-      //console.log($tab_panel);
-      if (this.tabNav) {
-        this.updateTabNav();
-      }
+      currentTab.$navItem = this.$tabNavItems.eq(currentTab.position);
+      currentTab.$navItem.attr({
+        "tabindex": "0",
+        "aria-selected": "true",
+        "aria-expanded": "true"
+      });
     };
-
 
     /**
      * Binds any events specific to Accordion functionality (tablet and mobile only)
@@ -292,7 +288,7 @@
       });
 
       this.$container.on("keydown", this.options.tab_class_title, function (e) {
-        var currentIndex = app.keyHandler(e);
+        var currentIndex = app.handleKeyPress(e);
 
         if (currentIndex !== null) {
           app.toggleAccordion(app.$tab_panels.eq(currentIndex));
