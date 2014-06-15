@@ -276,18 +276,20 @@
     Tabs.prototype.bindAccordionEvents = function () {
       var app = this;
 
-      this.$container.on("click", this.options.tab_class_title, function (e) {
-        e.preventDefault();
-        app.toggleAccordion($(e.currentTarget).next(app.options.tab_class_panel));
-      });
+      this.$accordion
+        .on("keydown", this.options.tab_class_title, function (e) {
+          var currentIndex = app.handleKeyPress(e);
 
-      this.$container.on("keydown", this.options.tab_class_title, function (e) {
-        var currentIndex = app.handleKeyPress(e);
-
-        if (currentIndex !== null) {
-          app.toggleAccordion(app.$tab_panels.eq(currentIndex));
-        }
-      });
+          if (currentIndex !== null) {
+            app.toggleAccordion(app.$tab_panels.eq(currentIndex));
+          }
+        })
+        //https://bugs.webkit.org/show_bug.cgi?id=133613
+        .find(".tabs-container__title")
+          .on("click", function (e) {
+            e.preventDefault();
+            app.toggleAccordion($(e.currentTarget).next(app.options.tab_class_panel));
+          });
     };
 
     /**
@@ -345,6 +347,7 @@
       }).focus();
     };
 
+
     /**
      * Starter function - calls necessary set up and opend the first relevent tab
      */
@@ -355,13 +358,16 @@
 
       this.fetchTabData();
 
+      this.$accordion = this.$container.find(".accordion-wrapper").attr("role","tablist");
+      this.bindAccordionEvents();
+
       // if there's more than 1 tab, then a tab navigation is created
       if (this.$tab_panels.length > 1) {
         this.createTabNav();
         this.bindNavEvents();
       }
 
-      this.bindAccordionEvents();
+
 
       $startingTab = this.$tab_panels.eq(this.options.default_tab);
       if (this.$tab_panels.filter(".tabs-container__default").length) {
@@ -377,6 +383,5 @@
   $(function () {
     window.Tabs = Tabs;
     new window.Tabs($("#TabContainer"));
-    $("#TabContainer").find(".accordion-wrapper").attr("role","tablist");
   });
 }).call(this);
