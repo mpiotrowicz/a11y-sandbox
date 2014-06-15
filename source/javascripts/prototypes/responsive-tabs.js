@@ -198,7 +198,8 @@
       this.currentTab = {
         $tab_panel: $tab_panel
           .attr({
-            "aria-hidden": "false"
+            "aria-hidden": "false",
+            "tabindex"   : "0"
           }),
         $title: $tab_panel.prev(options.tab_class_title).attr({
           "aria-selected": true,
@@ -223,7 +224,8 @@
       currentTab.$tab_panel
         .attr({
           "aria-hidden": "true"
-        });
+        })
+        .removeAttr("tabindex");
 
       // update accordion title values as well so everything is in synch
       currentTab.$title.attr({
