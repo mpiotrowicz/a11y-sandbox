@@ -210,6 +210,7 @@
           }),
         $title: $tab_panel.prev(options.tab_class_title).attr({
           "aria-selected": true,
+          "aria-expanded": true,
           "tabindex": "0"
         }),
         position: this.$tab_panels.index($tab_panel)
@@ -281,70 +282,35 @@
           var currentIndex = app.handleKeyPress(e);
 
           if (currentIndex !== null) {
-            app.toggleAccordion(app.$tab_panels.eq(currentIndex));
+            app.handleAccordion(app.$tab_panels.eq(currentIndex));
           }
         })
         //https://bugs.webkit.org/show_bug.cgi?id=133613
         .find(".tabs-container__title")
           .on("click", function (e) {
             e.preventDefault();
-            app.toggleAccordion($(e.currentTarget).next(app.options.tab_class_panel));
+            app.handleAccordion($(e.currentTarget).next(app.options.tab_class_panel));
           });
     };
 
-    /**
-     * Opens/Closes the accordion as needed
-     * The accordion can be closed for all items at any given time, but if the window is resized, there has to be a tab that's open
-     * This is why the functionality has been split up, so there's a special "accordion.closed_class" that closes the accordion, but doesn't
-     * actually close the active tab, so that if you re-size the window back to desktop, you still see an active tab
-     */
-    Tabs.prototype.toggleAccordion = function ($tab_panel) {
-      var $tabPanel = $tab_panel;
-
-      // if it's the current tab, we want to just toggle it opened or closed for the viewer
-      // we never actually disable the current tab without opening a new one, otherwise on desktop you can have the scenario where there's no open tab
-      if (this.isCurrentTab($tabPanel)) {
-        $tabPanel.toggleClass(this.options.accordion.closed_class);
-        this.updateAccordionAria();
-        return false;
-      }
-      this.openAccordion($tabPanel);
-    };
-
-    /**
-     * Helper to just close the accordion, adding the special "accordion.closed_class" class but not actually inactivating the current tab
-     */
-    Tabs.prototype.updateAccordionAria = function () {
-      var currentTab = this.currentTab;
-      if (currentTab.$tab_panel.hasClass(this.options.accordion.closed_class)) {
-        currentTab.$tab_panel.attr("aria-hidden", "true");
-        currentTab.$title.attr("aria-expanded", "false");
-      }
-      else {
-        currentTab.$tab_panel.attr("aria-hidden", "false");
-        currentTab.$title.attr("aria-expanded", "true");
+    Tabs.prototype.handleAccordion = function($tab_panel) {
+      if (!this.isCurrentTab($tab_panel)) {
+        this.openAccordion($tab_panel);
       }
     };
 
-  /**
-   * Helper to open an accordion. Only 1 accordion can be open at a time, so this function actually just maps back onto the openTab() function, while removing the special "accordion.closed_class" class
-   * @param $tab_panel - jQuery element of the tab being opened (tab = accordion in this case, it just looks like an accordion in mobile/tablet)
-   */
+    /**
+     * Helper to open an accordion. Only 1 accordion can be open at a time, so this function actually just maps back onto the openTab() function, while removing the special "accordion.closed_class" class
+     * @param $tab_panel - jQuery element of the tab being opened (tab = accordion in this case, it just looks like an accordion in mobile/tablet)
+    */
     Tabs.prototype.openAccordion = function ($tab_panel) {
-      this.$tab_panels.filter("." + this.options.accordion.closed_class).removeClass(this.options.accordion.closed_class);
-      this.currentTab.$title.attr({
-        "aria-expanded": "false",
-        "aria-selected": "false"
-      });
       this.closeTab();
       this.openTab($tab_panel);
+      this.currentTab.$title.focus();
+
       $("html, body").animate({
         scrollTop: $tab_panel.offset().top - 25
       }, 200);
-      this.currentTab.$title.attr({
-        "aria-expanded" : "true",
-        "aria-selected" : "true"
-      }).focus();
     };
 
 
