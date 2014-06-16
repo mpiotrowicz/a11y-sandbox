@@ -13,17 +13,14 @@
      *
      * @param $container - parent of the items that will be tabbed together
      * @param $options - any overrides to the classes set below
-     */
+    */
     function Tabs($container, options) {
 
       var defaults = {
         default_tab: "0",                          // index of tab to open on page load
         tab_class_panel: ".tabs-container__panel", // wrapper for each tab/accordion title and content
         tab_class_title: ".tabs-container__title", // title element for each tab/accordion
-        tab_nav_id: "TabNav",                      // ID to provide the constructed tab navigation
-        accordion: {
-          closed_class: "accordion--closed"       // since the accordion can be closed for all tabs on mobile, extra class for just closing the accordion, even if the tab is technically active
-        }
+        tab_nav_id: "TabNav"                      // ID to provide the constructed tab navigation
       };
 
       this.$container = $container.addClass("tabs-init");
@@ -35,13 +32,13 @@
 
     /**
      * Creates a data object for all tabs within the widget
-     * Saves each Tab ID and title
-     * While it's iterating through the tabs, prepares the Aria roles as well
-     */
+     * Saves each tab ID and title, to be used to create desktop tab nav if needed
+     * Attaches Aria roles as it fetches tab data
+    */
     Tabs.prototype.fetchTabData = function () {
-      // array to store the data for all tabs in the widget
-      // array will be used to construct the navigation
+      // stores data for all tabs in the widget
       this.tabData = [];
+
       var i = 0,
         $tab_panels = this.$tab_panels,
         len = $tab_panels.length,
@@ -49,8 +46,7 @@
         $panelTitle,
         currentPanelData;
 
-      // for each of the tabs, fetch its title and ID from the HTML
-      // save to a data object for that tab
+      // for each of the tabs, save its title and ID from the HTML
       for (i; i < len; i++) {
         $currentPanel = $($tab_panels[i]);
         $panelTitle = $currentPanel.prev(this.options.tab_class_title);
@@ -79,11 +75,11 @@
     };
 
     /**
-     * Builds the HTML for the tabbed navigation
-     * for use in desktop only if there's more than 1 element to be tabbed
-     */
+     * Builds HTML for the desktop tab navigation
+    */
     Tabs.prototype.createTabNav = function () {
       this.tabNav = true;
+
       this.$tabNav = $(templates.tplTabNav({
         "tab": this.tabData
       })).prependTo(this.$container);
@@ -96,7 +92,7 @@
 
     /**
      * Binds the navigation events
-     */
+    */
     Tabs.prototype.bindNavEvents = function () {
       var app = this;
 
@@ -107,11 +103,9 @@
         if (!app.isCurrentTab($tabPanel)) {
           app.closeTab();
           app.openTab($tabPanel);
-          app.currentTab.$navItem.focus(); // focus only here so doesn't steal focus on page load
         }
       });
 
-      // bind key navigation
       this.$tabNav.on("keydown", "a", function (e) {
         var currentIndex = app.handleKeyPress(e);
         if (currentIndex !== null) {
@@ -125,15 +119,16 @@
 
     /**
      * helper to identify if the clicked tab is what's currently open
-     * @param $tab_panel - jQuery element of the tab that's being evaluated
-     */
+     * @param $tab_panel - jQuery collection of the tab to be evaluated
+    */
     Tabs.prototype.isCurrentTab = function ($tab_panel) {
       return this.currentTab.$tab_panel.get(0) == $tab_panel.get(0);
     };
 
     /**
-     * Key handler for tabs - allows arrow navigation
-     */
+     * Key handler for tabs
+     * @param e - event
+    */
     Tabs.prototype.handleKeyPress = function (e) {
       var keyCodes,
         currentIndex = this.currentTab.position;
@@ -151,7 +146,6 @@
         UP: 38
       };
 
-      // disabling key down and keys temporarily
       switch (e.keyCode) {
         case keyCodes.LEFT:
         case keyCodes.UP:
@@ -169,8 +163,6 @@
           break;
         case keyCodes.SPACE:
         case keyCodes.ENTER:
-          //if (actualIndex != currentIndexconsole.log(currenIndex);
-          //console.log(actualIndex);
           currentIndex = this.handleEnter(currentIndex);
           break;
         case keyCodes.RIGHT:
@@ -187,7 +179,7 @@
     };
 
     Tabs.prototype.handleEnter = function(currentIndex) {
-      // enter will either toggle an accordion or select a brand new item, depending on what mode we're in
+      // enter will either select a new panel or do nothing if it's focused on an active panel
       // so we have to deal with the currently focused element rather than the selected tab
       var currentTabByFocusIndex = document.getElementById(document.activeElement.getAttribute("aria-controls"));
 
@@ -199,8 +191,8 @@
 
     /**
      * Opens the tab
-     * @param $tab_panel - jQuery element of the tab that's being opened
-     */
+     * @param $tab_panel - jQuery collection of the tab that's being opened
+    */
     Tabs.prototype.openTab = function ($tab_panel) {
       var options = this.options;
       this.currentTab = {
@@ -216,7 +208,6 @@
         position: this.$tab_panels.index($tab_panel)
       };
 
-      //console.log($tab_panel);
       if (this.tabNav) {
         this.updateTabNav();
       }
@@ -224,8 +215,8 @@
 
     /**
      * closes a tab if there's one open and a new one has been activated
-     * Only one tab can be open at any given time
-     */
+     * Only one tab/accordion can be open at any given time
+    */
     Tabs.prototype.closeTab = function () {
       var currentTab = this.currentTab;
 
@@ -256,7 +247,7 @@
     /**
      * Updates the dynamically created tab nav in desktop once a new tab has been opened
      * @param $tab - jQuery element for the tab that was just opened
-     */
+    */
     Tabs.prototype.updateTabNav = function () {
       var currentTab = this.currentTab;
 
@@ -273,7 +264,7 @@
      * ARIA initially didn't work here because:
       * there's no tablist role on any container
       * the tab panels are controlled by the nav and not the headers
-     */
+    */
     Tabs.prototype.bindAccordionEvents = function () {
       var app = this;
 
@@ -300,8 +291,9 @@
     };
 
     /**
-     * Helper to open an accordion. Only 1 accordion can be open at a time, so this function actually just maps back onto the openTab() function, while removing the special "accordion.closed_class" class
-     * @param $tab_panel - jQuery element of the tab being opened (tab = accordion in this case, it just looks like an accordion in mobile/tablet)
+     * Helper to open an accordion.
+     * Just calls openTab() and adds animation to scroll viewer to active accordion panel
+     * @param $tab_panel - jQuery element of the tabpnael being opened
     */
     Tabs.prototype.openAccordion = function ($tab_panel) {
       this.closeTab();
@@ -315,8 +307,8 @@
 
 
     /**
-     * Starter function - calls necessary set up and opend the first relevent tab
-     */
+     * Init function - calls necessary set up and opens the first relevent tab
+    */
     Tabs.prototype.init = function () {
       var $startingTab;
       // save all the elements that will become tabs
@@ -327,13 +319,11 @@
       this.$accordion = this.$container.find(".accordion-wrapper").attr("role","tablist");
       this.bindAccordionEvents();
 
-      // if there's more than 1 tab, then a tab navigation is created
+      // if there's more than 1 tab, then a tab navigation is created on desktop
       if (this.$tab_panels.length > 1) {
         this.createTabNav();
         this.bindNavEvents();
       }
-
-
 
       $startingTab = this.$tab_panels.eq(this.options.default_tab);
       if (this.$tab_panels.filter(".tabs-container__default").length) {
