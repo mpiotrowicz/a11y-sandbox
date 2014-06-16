@@ -4,6 +4,7 @@
 }
 .tabs-container__panel:focus {
     outline: thin dotted;
+    outline-offset: 3px;
 }
 
 @media (min-width: 49.8125em) {
