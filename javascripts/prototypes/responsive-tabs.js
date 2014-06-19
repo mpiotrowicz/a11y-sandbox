@@ -15,17 +15,14 @@
      *
      * @param $container - parent of the items that will be tabbed together
      * @param $options - any overrides to the classes set below
-     */
+    */
     function Tabs($container, options) {
       // set all the classes
       var defaults = {
         default_tab: "0", // the eq() value of the default tab to open on page load
         tab_class_panel: ".tabs-container__panel", // parent of the tab detail + tab title element
         tab_class_title: ".tabs-container__title", // the class of the title for each tab, added usually to an h3 element
-        tab_nav_id: "TabNav", // ID for the tab navigation
-        accordion: {
-          closed_class: "accordion--closed" // since the accordion can be closed for all tabs, extra class for just closing the accordion, even if the tab is technically active
-        }
+        tab_nav_id: "TabNav" // ID for the tab navigation when it's dynamically constructed
       };
 
       this.$container = $container.addClass("tabs-init");
@@ -39,10 +36,12 @@
      * Creates a data object for all tabs within the widget
      * Saves each Tab ID and title
      * While it's iterating through the tabs, prepares the Aria roles as well
-     */
+     * Used to create tab navigation
+    */
     Tabs.prototype.fetchTabData = function () {
-      // array to store the data for all tabs in the widget
+      // stores data for all tabs in the widget
       this.tabData = [];
+      
       var i = 0,
         $tab_panels = this.$tab_panels,
         len = $tab_panels.length,
@@ -50,8 +49,7 @@
         $panelTitle,
         currentPanelData;
 
-      // for each of the tabs, fetch its title and ID from the HTML
-      // save to a data object for that tab
+      // for each of the tabs, save its title and ID from the HTML
       for (i; i < len; i++) {
         $currentPanel = $($tab_panels[i]);
         $panelTitle = $currentPanel.prev(this.options.tab_class_title);
@@ -60,19 +58,14 @@
           tabTitle: $panelTitle.text()
         };
 
-        // save the data to an array of all tab data.
-        // array will be used to construct the navigation
         this.tabData.push(currentPanelData);
 
-        // witin the tab, find the details and update the Aria attributes
+        // aria for tabpanel and tab control for accordion version
         $currentPanel.attr({
           "role": "tabpanel",
           "aria-hidden": "true"
         });
 
-        // witin the tab, find the title and update the Aria attributes
-        // next, append the required icon to the title, used on tablet and mobile
-        // labels and controls it
         $panelTitle
           .attr({
             "tabindex": "-1",
@@ -87,10 +80,10 @@
     /**
      * Builds the HTML for the tabbed navigation
      * for use in desktop only if there's more than 1 element to be tabbed
-     */
+    */
     Tabs.prototype.createTabNav = function () {
       this.tabNav = true;
-      // use the tabData object to construct the buttons needed for the tab navigation, and append it to the container
+  
       this.$tabNav = $(templates.tplTabNav({
         "tab": this.tabData
       })).prependTo(this.$container);
@@ -104,7 +97,7 @@
 
     /**
      * Binds the navigation events
-     */
+    */
     Tabs.prototype.bindNavEvents = function () {
       var app = this;
 
