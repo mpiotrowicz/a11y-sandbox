@@ -60,7 +60,9 @@
         // update ARIA attrs for the panel and accordion title
         $currentPanel.attr({
           "role": "tabpanel",
-          "aria-hidden": "true"
+          "aria-hidden": "true",
+          "aria-setsize": len + 1,
+          "aria-posinset" : i + 1
         });
 
         $panelTitle
