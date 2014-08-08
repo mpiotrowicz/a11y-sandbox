@@ -8,6 +8,7 @@ body {
     padding: 1.5em;
     font-family: "helvetica", arial, sans-serif;
     background: #999;
+    color: #000;
 }
 
 *, *:before, *:after {
@@ -18,4 +19,29 @@ body {
 
 .gutter-bottom {
   margin-bottom: 20px;
+}
+
+button {
+  border: none;
+  background: none;
+}
+
+/*============================================================================
+  Lists
+==============================================================================*/
+nav ul,
+nav li {
+  list-style: none;
+}
+
+nav li {
+  float: left;
+  margin-right: 20px;
+}
+
+/*============================================================================
+  Typography
+==============================================================================*/
+a {
+  color: #000;
 }

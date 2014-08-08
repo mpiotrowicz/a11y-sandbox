@@ -1,0 +1,42 @@
+- content_for :cssheader do
+  = stylesheet_link_tag "prototypes/modal.css"
+
+%nav
+  %ul
+    %li
+      %a{href: "#"}Link
+    %li
+      %a{href: "#"}Link
+    %li
+      %a{href: "#"}Link
+    %li
+      %a{href: "#"}Link
+    %li
+      %a{href: "#"}Link
+
+%button{type: "button", class: "modal-trigger"}Trigger Modal
+
+.modal-container{role: "dialog", aria: {labelledby: "KeyboardAccessibleModal"}}
+  .modal-content
+    %button.btn-close.modal-trigger{type: "button"}Return to Page
+    %h2#KeyBoardAccessibleModal Keyboard Modal
+    %p
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Facere sed aliquam vitae, rem modi soluta eum, fugiat obcaecati, sint esse quas culpa excepturi reiciendis dolorem quam ducimus doloremque laborum repudiandae.
+      %br
+      %a{href:"http://en.wikipedia.org/wiki/Potato_chip"}Chips!
+
+%footer
+  %nav
+    %ul
+      %li
+        %a{href: "#"}Link
+      %li
+        %a{href: "#"}Link
+      %li
+        %a{href: "#"}Link
+      %li
+        %a{href: "#"}Link
+      %li
+        %a{href: "#"}Link
+- content_for :jsfooter do
+  = javascript_include_tag "prototypes/modal"

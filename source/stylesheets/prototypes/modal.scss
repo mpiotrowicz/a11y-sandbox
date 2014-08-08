@@ -1,0 +1,50 @@
+
+button {
+  padding: 5px;
+  background: #fff;
+}
+
+.btn-close {
+  border-radius: 2px;
+  background: #fff;
+}
+
+.modal-container {
+  display: none;
+  background: #000;
+  height: 100%;
+  left: 0;
+  opacity: 0;
+  overflow: scroll;
+  position: fixed;
+  top: 0;
+  width: 100%;
+  z-index: -1;
+  color: #FFF;
+  -webkit-transition: opacity 0.18s;
+  -moz-transition: opacity 0.18s;
+  transition: opacity 0.18s;
+  -webkit-overflow-scrolling: touch;
+  .modal-content {
+    max-width: 960px;
+    margin: 50px auto 0;
+    padding: 50px;
+    line-height: 1.2;
+    background: #ccc;
+    color: #000;
+    border-radius: 5px;
+    a {
+      color: #000;
+    }
+  }
+  .modal--open & {
+    display: block;
+    opacity: 1;
+    visibility: visible;
+    z-index: 1000;
+  }
+}
+
+.btn-close {
+  float: right;
+}
