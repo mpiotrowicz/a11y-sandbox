@@ -1,6 +1,8 @@
 body {
   background: #fff;
 }
+
+
 .form-red {
   color: #CF0B1A;
   input {
@@ -13,6 +15,9 @@ body {
   input {
     border: solid 2px #6ED31F;
   }
+}
+.page-spacer {
+  margin-bottom: 100px;
 }
 
 p {
@@ -29,6 +34,26 @@ label, input {
   margin-bottom: 10px;
 }
 
+input {
+  padding: 10px;
+  border-radius: 2px;
+  border: solid 1px #999;
+}
+
+::-webkit-input-placeholder {
+  color: #ccc;
+  font-style: italic;
+}
+
+.better::-webkit-input-placeholder {
+  color: #999;
+  font-style: italic;
+}
+
+.error {
+  display: block;
+  font-size: 14px;
+}
 .phone-input {
   float: left;
   width: 60px;

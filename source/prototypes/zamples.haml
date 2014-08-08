@@ -1,21 +1,71 @@
 - content_for :cssheader do
   = stylesheet_link_tag "prototypes/zamples.css"
 
--#
-  %form
-    %p.form-red
-      Something went wrong! Please review your form
+
+%form
+  %p.form-red
+    There has been an error
+
+    .gutter-bottom.form-red
+      %label First Name *
+      %input
+
+    .gutter-bottom
+      %input{placeholder:"email address"}
+  .page-spacer
+
+%form
+
+  %p.form-red
+    There has been an error with your submission, please review the form
+
+  .gutter-bottom.form-red
+    %label
+      First Name *
+      %span.error Required, please provide your first name
+      %input
+
+  %label
+    Email Address
+    %input.better{placeholder:"name@address.com"}
+  .page-spacer
+
+%form
+
+  %p.form-red
+    There has been an error
+
+    .gutter-bottom
+      %input{value:"Chip Tasty"}
 
     .form-red.gutter-bottom
-      %label
-        First Name *
-        %br
-        %span Field required, please provide your first name
-      %input
-    .form-green
-      %label Email
-      %input
+      %input{placeholder:"name@address.com"}
 
+    .page-spacer
+
+%form
+  %h2 Your Details
+  %p.form-red
+    There has been an error with your submission, please review the form
+
+  .page-spacer
+  .gutter-bottom
+    %label{for:"InputPhoneNumber"} Phone Number
+    %input#InputPhoneNumber{aria: {describedby:"PhoneHelpText"}}
+    .span#PhoneHelpText
+      eg. 555-555-5555.
+      %br
+      We will use this number only in case of emergency
+
+  .page-spacer
+  .form-red.gutter-bottom
+    %label
+      Email Address
+      %br
+      %span.error Your email address must be in a valid `name@address` format
+    %input{placeholder:"name@address.com"}
+
+-#
   .container
     %br
     %br

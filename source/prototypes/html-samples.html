@@ -1,0 +1,33 @@
+<label for="<INPUT_ID">
+  <span class="txt-label">Email Address</span>
+  <input type="email" placeholder="email@example.com" />
+  <span class="txt-error hidden">Your email address must be in a valid `name@address` format</span>
+</label>
+
+
+<label for="InputFirstName">
+  <span class="txt-label">First Name *</span>
+  <span class="txt-error">Required, please provide your first name</span>
+</label>
+<input type="text" id="InputFirstName">
+
+<label for="InputPhoneNumber">Phone Number</label>
+<input aria-describedby="PhoneHelpText" id="InputPhoneNumber">
+<span id="PhoneHelpText">
+  eg. 555-555-5555.
+  <br>
+  We will use this number only in case of emergency
+</span>
+
+<a href="#second-tab" aria-controls="#second-tab" aria-selected="false" aria-expanded="false">Panel 2</a>
+
+<div class="tabs-container__panel" id="Tab1" role="tabpanel" aria-hidden="false" aria-setsize="4" aria-posinset="1" tabindex="0">
+      <p>First Tab Panel</p>
+      <a href="#">Link</a>
+    </div>
+aria-pressed
+aria-selected
+aria-checked
+aria-disabled
+aria-expanded
+<a href="#Tab2" id="TabController-Tab2" class="txt-btn tabs-navigation__button" role="tab" aria-selected="false" aria-controls="Tab2" tabindex="-1" aria-expanded="false">Tab 2</a>
