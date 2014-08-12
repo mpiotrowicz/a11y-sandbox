@@ -2,6 +2,11 @@
   background: #fff;
   padding: 1.5em;
 }
+.tabs-container__panel:focus {
+    outline: thin dotted;
+    outline-offset: 3px;
+}
+
 @media (min-width: 49.8125em) {
     .tabs-nav-init .tabs-container__title,
     .tabs-nav-init .tabs-container__panel {
