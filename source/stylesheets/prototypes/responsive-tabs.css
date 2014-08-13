@@ -1,6 +1,9 @@
 .tabs-container__panel {
   background: #fff;
   padding: 1.5em;
+  border-bottom: solid 1px #ddd;
+  border-left: solid 1px #dddddd;
+  border-right: solid 1px #ddd;
 }
 .tabs-container__panel:focus {
     outline: thin dotted;
@@ -56,6 +59,7 @@
         color: #000;
         background: #fff;
         z-index: 10;
+        box-shadow:inset 1px 0 #dddddd,inset -1px 0 #dddddd, inset 0 1px #dddddd;;
     }
 }
 

@@ -22,17 +22,23 @@
     -# body page class to follow "_page" convention
   %body{ :class=>"#{current_page.data.pageclass}"}
     /[if lt IE 7] <p class=chromeframe>Your browser is <em>ancient!</em> <a href="http://browsehappy.com/">Upgrade to a different browser</a> or <a href="http://www.google.com/chromeframe/?redirect=true">install Google Chrome Frame</a> to experience this site.</p>
-    #ContentWrapper
-      %header.site-header{:role => "banner"}
-        %p banner
-      %main{:role => "main"}= yield
-      %footer
+
+    %header.site-header{:role => "banner"}
+      .page-width
+        %h1 Prototypes
+    %main{:role => "main"}= yield
+    %footer.footer--main
+      -# Any extra JS that may be required on a specific page
+      = yield_content :htmlfooter
+      .page-width
+        .author
+          By
+          %a{href:'http://twitter.com/monsika'} Monika Piotrowicz
 
     %script{:src => "http://code.jquery.com/jquery-1.11.0.min.js"}
     :javascript
       window.jQuery || document.write('<script src="../javascripts/vendor/jquery.js"><\/script>')
     = javascript_include_tag "vendor/handlebars.js"
-    = javascript_include_tag "common"
 
     -# Any extra JS that may be required on a specific page
     = yield_content :jsfooter

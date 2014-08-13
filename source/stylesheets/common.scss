@@ -4,11 +4,15 @@
 *= require "vendor/html5bp.css"
 */
 
+@import 'bourbon';
+@import 'modules/colors';
+
 body {
     padding: 1.5em;
-    font-family: "helvetica", arial, sans-serif;
-    background: #999;
-    color: #000;
+    font-family: helvetica, arial, sans-serif;
+    background: $color-body;
+    color: $color-body-text;
+    line-height: 1.2;
 }
 
 *, *:before, *:after {
@@ -17,13 +21,11 @@ body {
   box-sizing: border-box;
 }
 
+/*============================================================================
+  Layout Helpers
+==============================================================================*/
 .gutter-bottom {
   margin-bottom: 20px;
-}
-
-button {
-  border: none;
-  background: none;
 }
 
 /*============================================================================
@@ -40,8 +42,46 @@ nav li {
 }
 
 /*============================================================================
-  Typography
+  Typography & Buttons
 ==============================================================================*/
 a {
-  color: #000;
+  color: $color-body-text;
+  @include transition(all 150ms ease);
+  &:hover {
+    color: #000;
+  }
+}
+
+.btn--reset {
+  border: none;
+  background: none;
+}
+
+.btn {
+  @extend .btn--reset;
+  padding: 8px;
+  background: $color-body--dark;
+  color: $color-body;
+  border: $color-grey-border;
+  border-radius: 3px;
+  line-height: 1.4;
+  @include transition(background 150ms ease, color 150ms ease);
+  &:hover,
+  &:focus {
+    background: #000;
+  }
+  &:focus {
+    box-shadow: 0 0 0 1px #FFF, 0 0 0 3px rgba(0, 132, 180, 0.5);
+  }
+}
+
+header {
+  padding-top: 30px;
+  margin-bottom: 30px;
+}
+.footer--main {
+  margin-top: 50px;
+}
+.author {
+  float: right;
 }
