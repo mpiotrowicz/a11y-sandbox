@@ -1,9 +1,12 @@
+@import 'bourbon';
+@import 'modules/colors';
+
 .tabs-container__panel {
   background: #fff;
   padding: 1.5em;
-  border-bottom: solid 1px #ddd;
-  border-left: solid 1px #dddddd;
-  border-right: solid 1px #ddd;
+  border-bottom: solid 1px #a9a9a9;
+  border-left: solid 1px #a9a9a9;
+  border-right: solid 1px #a9a9a9;
 }
 .tabs-container__panel:focus {
     outline: thin dotted;
@@ -25,15 +28,16 @@
         overflow:hidden;
         position:relative;
         z-index:10;
-        box-shadow:inset 0 -1px #dddddd;
+        box-shadow:inset 0 -1px #a9a9a9;
     }
 
     .tabs-navigation li {
         display:table-cell;
         vertical-align:top;
-        -webkit-box-shadow:inset 1px 0 #dddddd;
-        -moz-box-shadow:inset 1px 0 #dddddd;
-        box-shadow:inset 1px 0 #dddddd;
+
+        &:first-child .tabs-navigation__button {
+            box-shadow: inset 1px 0 #a9a9a9, inset -1px 0 #a9a9a9, inset 0 1px #a9a9a9;;
+        }
     }
 
     .tabs-navigation__button {
@@ -46,20 +50,24 @@
         font-size:1.125em;
         padding:1.22222em;
         border: none;
-        background: #ccc;
+        background: #ddd;
         margin: 0;
-        box-shadow:inset 1px 0 #dddddd,inset -1px 0 #dddddd;
+        box-shadow: inset -1px 0 #a9a9a9, inset 0 1px #a9a9a9;
+
+        @include transition(none);
     }
 
+    .tabs-navigation__button:focus,
     .tabs-navigation__button:hover {
       color: #2B2B2B;
+      background: #a9a9a9;
     }
 
     .tabs-navigation__button[aria-selected="true"] {
         color: #000;
         background: #fff;
         z-index: 10;
-        box-shadow:inset 1px 0 #dddddd,inset -1px 0 #dddddd, inset 0 1px #dddddd;;
+        box-shadow:inset 1px 0 #a9a9a9,inset -1px 0 #a9a9a9, inset 0 1px #a9a9a9;;
     }
 }
 
@@ -69,7 +77,7 @@
     }
 
     .tabs-init {
-        border-top:solid 1px #dddddd;
+        border-top:solid 1px #a9a9a9;
         margin-left:-1.5em;
         margin-right:-1.5em
     }
@@ -81,7 +89,7 @@
 
     .accordion--closed .tabs-container__title,
     .tabs-init .tabs-container__title {
-        background: #ddd;
+        background: #a9a9a9;
         border-bottom: solid 1px #a1a1a1;
     }
 
@@ -94,7 +102,7 @@
         background:#fff;
         color:#6a6a6a;
         font-weight:bold;
-        border-bottom:solid 1px #dddddd;
+        border-bottom:solid 1px #a9a9a9;
     }
 
     .tabs-container__panel.accordion--closed {
