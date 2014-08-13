@@ -11,3 +11,5 @@ gem "sprockets-sass"
 gem "sprockets-helpers"
 
 gem 'middleman-gh-pages'
+
+gem 'bourbon'
