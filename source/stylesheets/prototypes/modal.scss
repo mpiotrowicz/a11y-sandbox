@@ -1,14 +1,90 @@
+@import 'bourbon';
+@import 'modules/colors';
 
-button {
-  padding: 5px;
-  background: #fff;
+/*============================================================================
+  Layout - this is just for the demo page not to look like butt. I'll add
+  an actual grid when I need one :)
+==============================================================================*/
+html {
+  height: 100%;
 }
 
-.btn-close {
-  border-radius: 2px;
-  background: #fff;
+.page-width {
+  @include clearfix;
+  margin: 0 auto;
+  width: 900px;
 }
 
+.page-modal {
+  margin: 0;
+  padding: 0;
+
+  @include display(flex);
+  @include flex-direction(column);
+
+  min-height: 100%;
+
+  header,
+  main {
+    @include display(flex);
+  }
+
+  main {
+    @extend .page-width;
+    @include flex(1);
+  }
+
+  .flex-container {
+    @include display(flex);
+    @include flex(1);
+  }
+
+  footer {
+    padding: 30px 0;
+  }
+}
+
+/*================ Page Cols ================*/
+.layout-col-left {
+  // float: left;
+  // width: 25%;
+  //@include flex(0 0 12em);
+  //padding-right: 5%;
+  -webkit-box-flex: 0;
+  -webkit-flex: 0 0 12em;
+  -moz-box-flex: 0;
+  -ms-flex: 0 0 12em;
+  flex: 0 0 12em;
+}
+
+.layout-col-right {
+  // @include flex(1);
+  // padding-left: 5%;
+}
+
+.nav--vertical {
+  padding-top: 10px;
+  li {
+    float: none;
+    margin: 5px 0 15px;
+  }
+}
+
+/*================ Pretty Footer ================*/
+.footer--main {
+  background: $color-body--dark;
+  padding: 50px 0;
+  color: $color-body-text--lighter;
+  a {
+    color: $color-body-text--lighter;
+    &:hover {
+      color: #fff;
+    }
+  }
+}
+/*============================================================================
+  Modal
+==============================================================================*/
 .modal-container {
   display: none;
   background: #000;
@@ -26,15 +102,17 @@ button {
   transition: opacity 0.18s;
   -webkit-overflow-scrolling: touch;
   .modal-content {
-    max-width: 960px;
+    max-width: 900px;
     margin: 50px auto 0;
     padding: 50px;
-    line-height: 1.2;
-    background: #ccc;
+    background: $color-grey-border;
     color: #000;
     border-radius: 5px;
     a {
       color: #000;
+    }
+    p {
+      margin-bottom: 20px;
     }
   }
   .modal--open & {
@@ -45,6 +123,11 @@ button {
   }
 }
 
-.btn-close {
+.btn--close {
   float: right;
+  color: #174EDA;
+  &:hover,
+  &:focus {
+    text-decoration: underline;
+  }
 }
